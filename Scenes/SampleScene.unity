@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 1025430834}
   - component: {fileID: 1025430833}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -375,8 +375,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  jumpHeigt: 0
+  jumpHeigt: 0.7
   maxSpeed: 1000
+  groundDistance: 0
+  grounded: 0
 --- !u!212 &1025430831
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -5,9 +5,9 @@ using Extensions;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed, jumpHeigt, maxSpeed;
+    [SerializeField] private float speed, jumpHeigt, maxSpeed, groundDistance;
 
-    private bool grounded = false;
+    [SerializeField] private bool grounded = false;
 
     private Rigidbody2D _rigidbody;
 
@@ -30,6 +30,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             _rigidbody.AddForce(Vector2.right * horizontal * speed * Time.deltaTime, ForceMode2D.Force);
+        }
+
+        if(Physics2D.Raycast(transform.position,Vector2.down).distance <= groundDistance)
+        {
+            grounded = true;
         }
 
 
