@@ -29,13 +29,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _rigidbody.AddForce(Vector2.right * horizontal * speed * Time.deltaTime);
+            _rigidbody.AddForce(Vector2.right * horizontal * speed * Time.deltaTime, ForceMode2D.Force);
         }
 
 
-        if (grounded && (Input.GetKey(KeyCode.Space)))
+        if (grounded && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
         {
-
+            grounded = false;
+            _rigidbody.AddForce(Vector2.up * jumpHeigt, ForceMode2D.Impulse);
         }
     }
 }
