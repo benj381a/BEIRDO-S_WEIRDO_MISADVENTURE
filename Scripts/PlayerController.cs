@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed, jumpHeigt, maxSpeed, groundDistance;
 
-    [SerializeField] private bool grounded = false;
+    private bool grounded = false;
 
     private Rigidbody2D _rigidbody;
 
