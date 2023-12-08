@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO.Ports;
+//using System.IO.Ports;
 using System.Linq;
 using TMPro;
 using UnityEngine.UI;
@@ -34,7 +34,7 @@ namespace Extensions
             }
         }
     }
-    public struct Serial
+    /*public struct Serial
     {
 
         public static SerialPort sp = new SerialPort();
@@ -154,5 +154,5 @@ namespace Extensions
                 y -= 250;
             }
         }
-    }
+    }*/
 }
