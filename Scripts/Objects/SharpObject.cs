@@ -32,6 +32,16 @@ public class SharpObject : MonoBehaviour
 
             if (damage < 0)
             {
+                RaycastHit2D hit = Physics2D.BoxCast(collision.GetComponent<PlayerController>().swingPoint, Vector2.one, 0, Vector2.zero);
+                if (hit.collider != null)
+                {
+                    if (hit.collider.gameObject == gameObject)
+                    {
+                        collision.GetComponent<PlayerController>().Realease();
+                    }
+                }
+                
+
                 Destroy(gameObject);
             }
 

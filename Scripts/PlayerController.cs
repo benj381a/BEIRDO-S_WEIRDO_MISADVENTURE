@@ -76,6 +76,8 @@ public class PlayerController : MonoBehaviour
 
         float horizontal = Input.GetAxis("Horizontal");
 
+        GetComponent<Animator>().SetInteger("walkDir", Mathf.RoundToInt(horizontal));
+
         if (grounded
             && Mathf.Abs(_rigidbody.velocity.x) > maxSpeed
             && !grabbeling
@@ -145,7 +147,7 @@ public class PlayerController : MonoBehaviour
         {
             swingPoint = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).point;
             Transform trans = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).transform;
-            Debug.Log(trans.gameObject);
+
             if (trans.GetComponentInChildren<MovingPlatform>())
             {
                 platform.position = swingPoint;
@@ -170,6 +172,7 @@ public class PlayerController : MonoBehaviour
         }
         if ((Input.GetMouseButton(0) || Input.GetMouseButton(1))
             && hasPulledGrabbel
+            && !pullingBack
             )
         {
             var dir = swingPoint - transform.position.ToVector2();
@@ -187,17 +190,21 @@ public class PlayerController : MonoBehaviour
             &&!pullingBack
             )
         {
-            joint.enabled = false;
-            _renderer.enabled = false;
-
-            grabbeling = false;
-            platform.parent = transform;
-            transform.parent = null;
-            joint.autoConfigureDistance = true;
-
-            transform.rotation = new Quaternion();
+            Realease();
         }
         transform.localScale = Vector3.one;
+    }
+    public void Realease()
+    {
+        joint.enabled = false;
+        _renderer.enabled = false;
+
+        grabbeling = false;
+        platform.parent = transform;
+        transform.parent = null;
+        joint.autoConfigureDistance = true;
+
+        transform.rotation = new Quaternion();
     }
     private IEnumerator PullGrabbel()
     {
@@ -224,6 +231,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Dead()
     {
         stop = true;
+        Realease();
         GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(waitTime);
         stop = false;
@@ -236,9 +244,6 @@ public class PlayerController : MonoBehaviour
         musicSorce.loop = true;
         musicSorce.Play();
 
-        yield return new WaitForSeconds(intro.length * 0.9f);
-
-        musicSorce.clip = loop;
-        musicSorce.Play();
+        yield return new WaitForSeconds(intro.length * 0.9f);musicSorce.clip=loop;musicSorce.Play();
     }
 }
