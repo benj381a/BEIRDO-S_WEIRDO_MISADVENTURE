@@ -395,12 +395,13 @@ MonoBehaviour:
   jumpHeigt: 10
   groundDistance: 1.01
   ropePullSpeed: 2
-  maxGrabbelDistance: 100
+  maxGrabbelDistance: 5
   waitTime: 2
   grounded: 0
   jumped: 0
   hasPulledGrabbel: 1
   grabbeling: 0
+  stop: 0
   health: 100
 --- !u!212 &1025430831
 SpriteRenderer:

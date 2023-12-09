@@ -15,14 +15,15 @@ public class PlayerController : MonoBehaviour
     [Header("Grabbel System")]
     [SerializeField] private float ropePullSpeed;
     [SerializeField] private float maxGrabbelDistance;
+    [SerializeField] private float missedPullSpeed;
 
     [Header("Death")]
     [SerializeField] private float waitTime;
 
-    [SerializeField] private bool grounded = false, jumped = false, hasPulledGrabbel = true, grabbeling = false;
+    private bool grounded = false, hasPulledGrabbel = true, grabbeling = false, stop = false;
     /*[HideInInspector]*/ public int health = 100; //out of 100
     private float width = .01f;
-    private Vector2 swingPoint;
+    [HideInInspector] public Vector2 swingPoint;
     private Vector2 startPosition;
 
     private Rigidbody2D _rigidbody;
@@ -46,11 +47,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
-        Grabbel();
-        if(health <= 0)
+        if (!stop)
         {
-            StartCoroutine(Dead());
+            Movement();
+            Grabbel();
+            if (health <= 0)
+            {
+                StartCoroutine(Dead());
+            }
         }
     }
     private void Movement()
@@ -98,9 +102,27 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+        Debug.Log(Physics2D.Raycast(transform.position, mousePos, maxGrabbelDistance).collider);
 
-        if (Input.GetMouseButtonDown(0) 
-            && Physics2D.CircleCast(mousePos, .01f, Vector2.zero).collider != null 
+        if (Physics2D.Raycast(transform.position, mousePos, maxGrabbelDistance).collider == null
+            && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            )
+        {
+            Vector2.MoveTowards(transform.position, mousePos, maxGrabbelDistance);
+
+            _renderer.SetPosition(1, swingPoint);
+
+            _renderer.enabled = true;
+
+            StartCoroutine(PullGrabbelIn());
+        }
+
+
+        _renderer.SetPosition(0, transform.position);
+        _renderer.widthMultiplier = health;
+
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            && Physics2D.Raycast(transform.position, mousePos, maxGrabbelDistance).collider != null
             && Vector2.Distance(transform.position, mousePos) <= maxGrabbelDistance
             )
         {
@@ -113,13 +135,11 @@ public class PlayerController : MonoBehaviour
 
             grabbeling = true;
         }
-        if (Input.GetMouseButton(0) 
+        if ((Input.GetMouseButton(0) || Input.GetMouseButton(1))
             && hasPulledGrabbel
             )
         {
             _renderer.positionCount = 2;
-            _renderer.SetPosition(0, transform.position);
-            _renderer.widthMultiplier = health;
 
             if (Vector2.Distance(transform.position, swingPoint) > 2)
             {
@@ -127,13 +147,14 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(PullGrabbel());
             }
         }
-        if (Input.GetMouseButtonUp(0))
+        if ((Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)))
         {
             joint.enabled = false;
             _renderer.enabled = false;
 
             grabbeling = false;
         }
+
     }
     private IEnumerator PullGrabbel()
     {
@@ -141,9 +162,21 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForFixedUpdate();
         hasPulledGrabbel = true;
     }
+    private IEnumerator PullGrabbelIn()
+    {
+        while (Vector2.Distance(transform.position, swingPoint) > 1)
+        {
+            swingPoint = Vector2.MoveTowards(swingPoint, transform.position, missedPullSpeed * Time.deltaTime);
+            yield return new WaitForFixedUpdate();
+        }
+        _renderer.enabled = false;
+    }
+
     private IEnumerator Dead()
     {
+        stop = true;
         yield return new WaitForSeconds(waitTime);
+        stop = false;
         health = 100;
         transform.position = startPosition;
     }
