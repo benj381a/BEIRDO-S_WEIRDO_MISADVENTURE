@@ -21,7 +21,15 @@ public class SharpObject : MonoBehaviour
             {
                 collision.GetComponent<PlayerController>().dammage.Play();
             }
-            
+
+            if (collision.GetComponent<ParticleController>())
+            {
+                if (damage < 0)
+                {
+                    collision.GetComponent<ParticleController>().pickupParticle.Play();
+                }
+            }
+
             if (damage < 0)
             {
                 Destroy(gameObject);
@@ -31,14 +39,6 @@ public class SharpObject : MonoBehaviour
             {
                 GetComponent<DemonScissorController>().Stop_();
                 GetComponent<DemonScissorController>().Start_();
-            }
-        }
-
-        if (collision.GetComponent<ParticleController>())
-        {
-            if (damage < 0)
-            {
-                collision.GetComponent<ParticleController>().pickupParticle.Play();
             }
         }
 
