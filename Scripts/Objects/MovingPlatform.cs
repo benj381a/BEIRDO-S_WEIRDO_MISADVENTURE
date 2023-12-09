@@ -7,6 +7,7 @@ public class MovingPlatform : MonoBehaviour
     public float speed;
     public int startingPoint;
     public Transform[] points;
+    public Transform col;
 
     private int i;
 

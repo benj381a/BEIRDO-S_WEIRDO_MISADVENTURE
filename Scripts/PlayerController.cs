@@ -21,12 +21,18 @@ public class PlayerController : MonoBehaviour
 
     [Header("Death")]
     [SerializeField] private float waitTime;
-
+     [Tooltip("out of 100")] 
+     public int health = 100;
+    
     [Header("Particals")]
     public ParticleSystem dammage;
 
+    [Header("Music")]
+    [SerializeField] private AudioSource musicSorce;
+    [SerializeField] private AudioClip intro;
+    [SerializeField] private AudioClip loop;
+
     private bool grounded = false, hasPulledGrabbel = true, grabbeling = false, stop = false, pullingBack = false;
-    /*[HideInInspector]*/ public int health = 100; //out of 100
     private float width = .01f;
     [HideInInspector] public Vector2 swingPoint;
     private Vector2 startPosition;
@@ -47,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
         _renderer.startWidth = width;
         _renderer.endWidth = width;
+
+        StartCoroutine(Music());
     }
 
     // Update is called once per frame
@@ -137,11 +145,12 @@ public class PlayerController : MonoBehaviour
         {
             swingPoint = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).point;
             Transform trans = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).transform;
-            if (trans.GetComponent<MovingPlatform>())
+            Debug.Log(trans.gameObject);
+            if (trans.GetComponentInChildren<MovingPlatform>())
             {
                 platform.position = swingPoint;
-                platform.parent = trans;
-                transform.parent = trans;
+                platform.SetParent(trans);
+                transform.SetParent(trans);
             }
             joint.connectedAnchor = swingPoint;
             _renderer.SetPosition(1, swingPoint);
@@ -163,6 +172,9 @@ public class PlayerController : MonoBehaviour
             && hasPulledGrabbel
             )
         {
+            var dir = swingPoint - transform.position.ToVector2();
+            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
             if (Vector2.Distance(transform.position, swingPoint) > minDistance && Input.GetMouseButton(1))
             {
@@ -182,8 +194,10 @@ public class PlayerController : MonoBehaviour
             platform.parent = transform;
             transform.parent = null;
             joint.autoConfigureDistance = true;
-        }
 
+            transform.rotation = new Quaternion();
+        }
+        transform.localScale = Vector3.one;
     }
     private IEnumerator PullGrabbel()
     {
@@ -215,5 +229,16 @@ public class PlayerController : MonoBehaviour
         stop = false;
         health = 100;
         transform.position = startPosition;
+    }
+    private IEnumerator Music()
+    {
+        musicSorce.clip = intro;
+        musicSorce.loop = true;
+        musicSorce.Play();
+
+        yield return new WaitForSeconds(intro.length * 0.9f);
+
+        musicSorce.clip = loop;
+        musicSorce.Play();
     }
 }
