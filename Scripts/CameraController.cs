@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float minDistance;
 
     // Update is called once per frame
     void Update()
     {
-        transform.position       
+        Transform plrTransform = GameObject.FindGameObjectsWithTag("Player")[0].transform;
+
+        if (Vector3.Distance(transform.position, plrTransform.position) > minDistance)
+        {
+            transform.position = Vector3.Lerp(transform.position, plrTransform.position, 1 / Vector3.Distance(transform.position, plrTransform.position));
+            transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+        }
     }
 }
