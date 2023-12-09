@@ -12,7 +12,10 @@ public class SharpObject : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<PlayerController>().health -= damage;
-            collision.GetComponent<Rigidbody2D>().AddForceAtPosition(Vector2.one * force, transform.position, ForceMode2D.Impulse);
+
+            Vector2 colTrans_Trans = collision.transform.position - transform.position;
+
+            collision.GetComponent<Rigidbody2D>().AddForceAtPosition(colTrans_Trans * force, transform.position, ForceMode2D.Impulse);
         }
     }
 }
