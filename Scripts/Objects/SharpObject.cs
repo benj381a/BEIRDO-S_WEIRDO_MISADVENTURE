@@ -17,6 +17,12 @@ public class SharpObject : MonoBehaviour
 
             collision.GetComponent<Rigidbody2D>().AddForceAtPosition(colTrans_Trans * force, transform.position, ForceMode2D.Impulse);
             collision.GetComponent<PlayerController>().dammage.Play();
+
+            if (GetComponent<DemonScissorController>())
+            {
+                GetComponent<DemonScissorController>().Stop_();
+                GetComponent<DemonScissorController>().Start_();
+            }
         }
     }
 }
