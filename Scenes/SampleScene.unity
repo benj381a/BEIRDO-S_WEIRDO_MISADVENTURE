@@ -390,13 +390,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd5adc812f33ef41b97f158c33d0547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1000
+  speed: 500
   maxSpeed: 1000
   jumpHeigt: 10
-  groundDistance: 1.5
+  groundDistance: 1.01
   ropePullSpeed: 2
-  maxGrabbelDistance: 5
+  maxGrabbelDistance: 100
   waitTime: 2
+  grounded: 0
+  jumped: 0
+  hasPulledGrabbel: 1
+  grabbeling: 0
   health: 100
 --- !u!212 &1025430831
 SpriteRenderer:
@@ -813,7 +817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  force: 5
+  force: 15
 --- !u!60 &1125504997
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -923,7 +927,7 @@ Transform:
   m_GameObject: {fileID: 1125504995}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.4312469, y: -2.95, z: 0}
+  m_LocalPosition: {x: 1.4312469, y: -2.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1008,7 +1012,7 @@ Transform:
   m_GameObject: {fileID: 1151718794}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4786, y: 1.47, z: 0}
+  m_LocalPosition: {x: 3.4786, y: 1.5, z: 0}
   m_LocalScale: {x: 3.74141, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

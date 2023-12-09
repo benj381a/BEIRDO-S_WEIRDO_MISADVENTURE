@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [Header("Death")]
     [SerializeField] private float waitTime;
 
-    private bool grounded = false, jumped = false, hasPulledGrabbel = true, grabbeling = false;
+    [SerializeField] private bool grounded = false, jumped = false, hasPulledGrabbel = true, grabbeling = false;
     /*[HideInInspector]*/ public int health = 100; //out of 100
     private float width = .01f;
     private Vector2 swingPoint;
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
         float horizontal = Input.GetAxis("Horizontal");
 
-        if (grounded 
+        if (grounded
             && Mathf.Abs(_rigidbody.velocity.x) > maxSpeed
             && !grabbeling
             )
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
         {
 
         }
-        else if(!grabbeling)
+        else if (!grabbeling)
         {
             _rigidbody.AddForce(Vector2.right * horizontal * speed * Time.deltaTime, ForceMode2D.Force);
         }
@@ -81,30 +81,17 @@ public class PlayerController : MonoBehaviour
             _rigidbody.AddForce(Vector2.right * horizontal * (speed * .1f) * Time.deltaTime, ForceMode2D.Force);
         }
         //jump
+        grounded = Physics2D.Raycast(transform.position, Vector2.down).distance <= groundDistance;
 
-        if (!jumped 
-            && Physics2D.Raycast(transform.position, Vector2.down).distance <= groundDistance
-            )
-        {
-            grounded = true;
-        }
-
-
-        if (grounded 
+        if (grounded
             && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             )
         {
-            grounded = false;
-            jumped = true;
-            StartCoroutine(Jump());
+            if (_rigidbody.velocity.y == 0)
+            {
+                _rigidbody.AddForce(Vector2.up * jumpHeigt, ForceMode2D.Impulse);
+            }
         }
-    }
-
-    private IEnumerator Jump()
-    {
-        _rigidbody.AddForce(Vector2.up * jumpHeigt, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(0.2f);
-        jumped = false;
     }
 
     private void Grabbel()
