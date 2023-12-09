@@ -16,10 +16,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float ropePullSpeed;
     [SerializeField] private float maxGrabbelDistance;
 
-    private bool grounded = false, jumped = false, hasPulledGrabbel = true;
+    [Header("Death")]
+    [SerializeField] private float waitTime;
+
+    private bool grounded = false, jumped = false, hasPulledGrabbel = true, grabbeling = false;
     /*[HideInInspector]*/ public int health = 100; //out of 100
     private float width = .01f;
     private Vector2 swingPoint;
+    private Vector2 startPosition;
 
     private Rigidbody2D _rigidbody;
     private DistanceJoint2D joint;
@@ -33,6 +37,7 @@ public class PlayerController : MonoBehaviour
         joint = GetComponent<DistanceJoint2D>();
         _renderer = GetComponent<LineRenderer>();
 
+        startPosition = transform.position;
 
         _renderer.startWidth = width;
         _renderer.endWidth = width;
@@ -45,7 +50,7 @@ public class PlayerController : MonoBehaviour
         Grabbel();
         if(health <= 0)
         {
-            Dead();
+            StartCoroutine(Dead());
         }
     }
     private void Movement()
@@ -56,14 +61,24 @@ public class PlayerController : MonoBehaviour
 
         if (grounded 
             && Mathf.Abs(_rigidbody.velocity.x) > maxSpeed
+            && !grabbeling
             )
         {
             _rigidbody.velocity *= Vector2.up;
             _rigidbody.velocity += Vector2.right * maxSpeed;
         }
-        else
+        else if (Mathf.Abs(_rigidbody.velocity.x) > (maxSpeed * .1f)
+            && grabbeling)
+        {
+
+        }
+        else if(!grabbeling)
         {
             _rigidbody.AddForce(Vector2.right * horizontal * speed * Time.deltaTime, ForceMode2D.Force);
+        }
+        else
+        {
+            _rigidbody.AddForce(Vector2.right * horizontal * (speed * .1f) * Time.deltaTime, ForceMode2D.Force);
         }
         //jump
 
@@ -108,6 +123,8 @@ public class PlayerController : MonoBehaviour
 
             joint.enabled = true;
             _renderer.enabled = true;
+
+            grabbeling = true;
         }
         if (Input.GetMouseButton(0) 
             && hasPulledGrabbel
@@ -127,6 +144,8 @@ public class PlayerController : MonoBehaviour
         {
             joint.enabled = false;
             _renderer.enabled = false;
+
+            grabbeling = false;
         }
     }
     private IEnumerator PullGrabbel()
@@ -135,8 +154,10 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForFixedUpdate();
         hasPulledGrabbel = true;
     }
-    private void Dead()
+    private IEnumerator Dead()
     {
-
+        yield return new WaitForSeconds(waitTime);
+        health = 100;
+        transform.position = startPosition;
     }
 }
