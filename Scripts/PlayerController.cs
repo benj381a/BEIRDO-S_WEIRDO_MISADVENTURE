@@ -7,7 +7,7 @@ using System.Linq;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Movement")]
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpHeigt;
     [SerializeField] private float groundDistance;
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [Header("Death")]
     [SerializeField] private float waitTime;
 
-    private bool grounded = false, hasPulledGrabbel = true, grabbeling = false, stop = false;
+    private bool grounded = false, hasPulledGrabbel = true, grabbeling = false, stop = false, pullingBack = false;
     /*[HideInInspector]*/ public int health = 100; //out of 100
     private float width = .01f;
     [HideInInspector] public Vector2 swingPoint;
@@ -102,13 +102,12 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        Debug.Log(Physics2D.Raycast(transform.position, mousePos, maxGrabbelDistance).collider);
 
-        if (Physics2D.Raycast(transform.position, mousePos, maxGrabbelDistance).collider == null
+        if (Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).collider == null
             && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
             )
         {
-            Vector2.MoveTowards(transform.position, mousePos, maxGrabbelDistance);
+            swingPoint =  Vector2.MoveTowards(transform.position, mousePos, maxGrabbelDistance);
 
             _renderer.SetPosition(1, swingPoint);
 
@@ -117,17 +116,15 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(PullGrabbelIn());
         }
 
-
         _renderer.SetPosition(0, transform.position);
         _renderer.widthMultiplier = health;
 
         if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-            && Physics2D.Raycast(transform.position, mousePos, maxGrabbelDistance).collider != null
-            && Vector2.Distance(transform.position, mousePos) <= maxGrabbelDistance
+            && Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).collider != null
             )
         {
-            joint.connectedAnchor = mousePos;
-            swingPoint = mousePos;
+            swingPoint = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).point;
+            joint.connectedAnchor = swingPoint;
             _renderer.SetPosition(1, swingPoint);
 
             joint.enabled = true;
@@ -147,7 +144,9 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(PullGrabbel());
             }
         }
-        if ((Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)))
+        if ((Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+            &&!pullingBack
+            )
         {
             joint.enabled = false;
             _renderer.enabled = false;
@@ -164,17 +163,21 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator PullGrabbelIn()
     {
+        pullingBack = true;
         while (Vector2.Distance(transform.position, swingPoint) > 1)
         {
             swingPoint = Vector2.MoveTowards(swingPoint, transform.position, missedPullSpeed * Time.deltaTime);
+            _renderer.SetPosition(1, swingPoint);
             yield return new WaitForFixedUpdate();
         }
         _renderer.enabled = false;
+        pullingBack = false;
     }
 
     private IEnumerator Dead()
     {
         stop = true;
+        GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(waitTime);
         stop = false;
         health = 100;
