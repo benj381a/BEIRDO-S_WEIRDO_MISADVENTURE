@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxGrabbelDistance;
 
     private bool grounded = false, jumped = false, hasPulledGrabbel = true;
+    /*[HideInInspector]*/ public int health = 100; //out of 100
+    private float width = .01f;
     private Vector2 swingPoint;
 
     private Rigidbody2D _rigidbody;
@@ -30,6 +32,10 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         joint = GetComponent<DistanceJoint2D>();
         _renderer = GetComponent<LineRenderer>();
+
+
+        _renderer.startWidth = width;
+        _renderer.endWidth = width;
     }
 
     // Update is called once per frame
@@ -37,6 +43,10 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
         Grabbel();
+        if(health <= 0)
+        {
+            Dead();
+        }
     }
     private void Movement()
     {
@@ -105,6 +115,7 @@ public class PlayerController : MonoBehaviour
         {
             _renderer.positionCount = 2;
             _renderer.SetPosition(0, transform.position);
+            _renderer.widthMultiplier = health;
 
             if (Vector2.Distance(transform.position, swingPoint) > 2)
             {
@@ -123,5 +134,9 @@ public class PlayerController : MonoBehaviour
         joint.distance = Vector2.Distance(transform.position, swingPoint) - (Time.deltaTime * ropePullSpeed);
         yield return new WaitForFixedUpdate();
         hasPulledGrabbel = true;
+    }
+    private void Dead()
+    {
+
     }
 }

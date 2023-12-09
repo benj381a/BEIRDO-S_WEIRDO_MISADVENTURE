@@ -393,9 +393,10 @@ MonoBehaviour:
   speed: 1000
   maxSpeed: 1000
   jumpHeigt: 10
-  groundDistance: 2
+  groundDistance: 1.5
   ropePullSpeed: 2
   maxGrabbelDistance: 5
+  health: 100
 --- !u!212 &1025430831
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -597,8 +598,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.0054035084
+        value: 0.03030303
         inSlope: 0
         outSlope: 0
         tangentMode: 0
