@@ -391,12 +391,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1000
-  jumpHeigt: 10
   maxSpeed: 1000
+  jumpHeigt: 10
   groundDistance: 2
   ropePullSpeed: 2
-  joint: {fileID: 1025430835}
-  _renderer: {fileID: 1025430836}
+  maxGrabbelDistance: 5
 --- !u!212 &1025430831
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -533,7 +532,7 @@ DistanceJoint2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025430829}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_EnableCollision: 1
   m_ConnectedRigidBody: {fileID: 0}
@@ -554,7 +553,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025430829}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -791,7 +790,6 @@ GameObject:
   - component: {fileID: 1151718796}
   - component: {fileID: 1151718795}
   - component: {fileID: 1151718797}
-  - component: {fileID: 1151718798}
   m_Layer: 0
   m_Name: Square (1)
   m_TagString: Untagged
@@ -860,7 +858,7 @@ Transform:
   m_GameObject: {fileID: 1151718794}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4786, y: -1.23, z: 0}
+  m_LocalPosition: {x: 3.4786, y: 1.47, z: 0}
   m_LocalScale: {x: 3.74141, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -911,33 +909,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &1151718798
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151718794}
-  m_BodyType: 0
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
