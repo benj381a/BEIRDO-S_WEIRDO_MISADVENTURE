@@ -16,6 +16,7 @@ public class SharpObject : MonoBehaviour
             Vector2 colTrans_Trans = collision.transform.position - transform.position;
 
             collision.GetComponent<Rigidbody2D>().AddForceAtPosition(colTrans_Trans * force, transform.position, ForceMode2D.Impulse);
+            collision.GetComponent<PlayerController>().dammage.Play();
         }
     }
 }

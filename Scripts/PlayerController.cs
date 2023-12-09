@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     [Header("Death")]
     [SerializeField] private float waitTime;
 
+    [Header("Particals")]
+    public ParticleSystem dammage;
+
     private bool grounded = false, hasPulledGrabbel = true, grabbeling = false, stop = false, pullingBack = false;
     /*[HideInInspector]*/ public int health = 100; //out of 100
     private float width = .01f;
