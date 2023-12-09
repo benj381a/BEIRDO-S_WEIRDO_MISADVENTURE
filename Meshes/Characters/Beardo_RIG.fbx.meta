@@ -18,7 +18,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Beardo_texture
-    second: {fileID: 2100000, guid: 4e5bf5c5c8cf80b408b7d82639df0658, type: 2}
+    second: {fileID: 2100000, guid: b27518247c06b2c4e8f2ee9cd40a091b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

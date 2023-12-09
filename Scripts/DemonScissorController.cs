@@ -38,6 +38,10 @@ public class DemonScissorController : MonoBehaviour
 
             transform.position = Vector2.MoveTowards(transform.position,location, (Vector2.Distance(transform.position,location)/wait) * Time.deltaTime);
             transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+
+            var dir = location - transform.position.ToVector2();
+            var angle_look = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle_look, Vector3.forward);
         }
     }
     public void Start_()
