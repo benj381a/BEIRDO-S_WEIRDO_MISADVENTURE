@@ -115,7 +115,6 @@ public class PlayerController : MonoBehaviour
 
             StartCoroutine(PullGrabbelIn());
         }
-        Debug.Log(mousePos);
 
         _renderer.SetPosition(0, transform.position);
         _renderer.widthMultiplier = health;
