@@ -7,7 +7,7 @@ using System.Linq;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Movement")]
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpHeigt;
     [SerializeField] private float groundDistance;
@@ -115,7 +115,6 @@ public class PlayerController : MonoBehaviour
 
             StartCoroutine(PullGrabbelIn());
         }
-        Debug.Log(mousePos);
 
         _renderer.SetPosition(0, transform.position);
         _renderer.widthMultiplier = health;
