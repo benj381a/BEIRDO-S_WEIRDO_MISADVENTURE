@@ -16,7 +16,16 @@ public class SharpObject : MonoBehaviour
             Vector2 colTrans_Trans = collision.transform.position - transform.position;
 
             collision.GetComponent<Rigidbody2D>().AddForceAtPosition(colTrans_Trans * force, transform.position, ForceMode2D.Impulse);
-            collision.GetComponent<PlayerController>().dammage.Play();
+            
+            if (damage > 0)
+            {
+                collision.GetComponent<PlayerController>().dammage.Play();
+            }
+            
+            if (damage < 0)
+            {
+                Destroy(gameObject);
+            }
 
             if (GetComponent<DemonScissorController>())
             {
@@ -24,5 +33,14 @@ public class SharpObject : MonoBehaviour
                 GetComponent<DemonScissorController>().Start_();
             }
         }
+
+        if (collision.GetComponent<ParticleController>())
+        {
+            if (damage < 0)
+            {
+                collision.GetComponent<ParticleController>().pickupParticle.Play();
+            }
+        }
+
     }
 }
