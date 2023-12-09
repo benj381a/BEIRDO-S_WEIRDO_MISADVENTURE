@@ -64,7 +64,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: b09f2ef5fdc01264282a3ec15c2f12b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24996,6 +24996,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6199111263582872635, guid: 5937ba4047e21b7489cd19b5e72e50d1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b09f2ef5fdc01264282a3ec15c2f12b4, type: 2}
+    - target: {fileID: -5708621195201507868, guid: 5937ba4047e21b7489cd19b5e72e50d1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b09f2ef5fdc01264282a3ec15c2f12b4, type: 2}
+    - target: {fileID: -4461069222186069820, guid: 5937ba4047e21b7489cd19b5e72e50d1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b09f2ef5fdc01264282a3ec15c2f12b4, type: 2}
+    - target: {fileID: -173166116196724053, guid: 5937ba4047e21b7489cd19b5e72e50d1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b09f2ef5fdc01264282a3ec15c2f12b4, type: 2}
     - target: {fileID: 16412818280834130, guid: 5937ba4047e21b7489cd19b5e72e50d1, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -25036,6 +25052,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Beardo_RIG
       objectReference: {fileID: 0}
+    - target: {fileID: 3088449368676863327, guid: 5937ba4047e21b7489cd19b5e72e50d1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b09f2ef5fdc01264282a3ec15c2f12b4, type: 2}
     - target: {fileID: 5866666021909216657, guid: 5937ba4047e21b7489cd19b5e72e50d1, type: 3}
       propertyPath: m_Controller
       value: 
@@ -25048,6 +25068,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6195489415124828019, guid: 5937ba4047e21b7489cd19b5e72e50d1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b09f2ef5fdc01264282a3ec15c2f12b4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5346425105498561703, guid: 5937ba4047e21b7489cd19b5e72e50d1, type: 3}

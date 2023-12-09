@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     IEnumerator move()
     {
         Transform plrTransform = GameObject.FindGameObjectsWithTag("Player")[0].transform;
-        transform.position = Vector3.Lerp(transform.position, plrTransform.position, 1 / Vector3.Distance(transform.position, plrTransform.position));
+        transform.position = Vector3.Lerp(transform.position, plrTransform.position, 10 / Vector3.Distance(transform.position, plrTransform.position));
         transform.position = new Vector3(transform.position.x, transform.position.y, -10);
         yield return new WaitForFixedUpdate();
         moved = false;
