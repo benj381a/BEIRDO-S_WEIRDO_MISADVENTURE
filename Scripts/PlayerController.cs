@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -70,6 +71,10 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(Dead());
             }
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         }
     }
     private void Movement()

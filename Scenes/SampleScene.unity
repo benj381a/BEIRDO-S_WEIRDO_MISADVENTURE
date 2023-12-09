@@ -1769,6 +1769,10 @@ PrefabInstance:
       propertyPath: plr
       value: 
       objectReference: {fileID: 970308710}
+    - target: {fileID: 646687649034497357, guid: 9439edfedf3b79e429ea4d73193d9cca, type: 3}
+      propertyPath: startWait
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4028354078125937897, guid: 9439edfedf3b79e429ea4d73193d9cca, type: 3}
       propertyPath: m_Name
       value: Enemy
