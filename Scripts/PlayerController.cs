@@ -178,6 +178,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Dead()
     {
         stop = true;
+        GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(waitTime);
         stop = false;
         health = 100;
