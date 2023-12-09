@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed, jumpHeigt, maxSpeed, groundDistance;
+    [SerializeField] private float speed, jumpHeigt, maxSpeed, groundDistance, ropePullSpeed;
 
     private bool grounded = false, jumped = false;
 
     private Rigidbody2D _rigidbody;
+    private Vector2 swingPoint;
+
+    [SerializeField] private DistanceJoint2D joint;
+    [SerializeField] private LineRenderer _renderer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +50,36 @@ public class PlayerController : MonoBehaviour
             jumped = true;
             StartCoroutine(Jump());
         }
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Input.GetMouseButtonDown(0))
+        {
+            joint.connectedAnchor = mousePos;
+            swingPoint = mousePos;
+        }
+        RaycastHit hit;
+        Physics.Raycast(Camera.main.ScreenPointToRay(swingPoint), out hit,100);
+        if (Input.GetMouseButton(0))
+        {
+            _renderer.positionCount = 2;
+            _renderer.SetPosition(0, transform.position);
+            _renderer.SetPosition(1, swingPoint);
+
+            joint.enabled = true;
+            _renderer.enabled = true;
+
+            if (Vector2.Distance(transform.position, swingPoint) > 2)
+            {
+                joint.distance = Vector2.Distance(transform.position, swingPoint) - (Time.deltaTime * ropePullSpeed);
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            joint.enabled = false;
+            _renderer.enabled = false;
+        }
+
+
+
     }
     IEnumerator Jump()
     {
@@ -51,4 +87,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         jumped = false;
     }
+
+
 }
