@@ -23,7 +23,7 @@ public class DemonScissorController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Start_();
     }
 
     // Update is called once per frame

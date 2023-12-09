@@ -20,6 +20,7 @@ public class SharpObject : MonoBehaviour
             if (damage > 0)
             {
                 collision.GetComponent<PlayerController>().dammage.Play();
+
             }
 
             if (collision.GetComponent<ParticleController>())
@@ -52,5 +53,10 @@ public class SharpObject : MonoBehaviour
             }
         }
 
+    }
+    IEnumerator hurtAnim(Collider2D collision)
+    {
+        yield return new WaitForSeconds(0.5f);
+        collision.GetComponent<PlayerController>().animator.SetTrigger("Hurt");
     }
 }

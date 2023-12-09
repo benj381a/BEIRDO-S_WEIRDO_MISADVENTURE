@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector2 swingPoint;
     private Vector2 startPosition;
 
+    [HideInInspector] public Animator animator;
     private Rigidbody2D _rigidbody;
     private DistanceJoint2D joint;
     private LineRenderer _renderer;
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
         _renderer.endWidth = width;
 
         StartCoroutine(Music());
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -76,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
         float horizontal = Input.GetAxis("Horizontal");
 
-        GetComponent<Animator>().SetInteger("walkDir", Mathf.RoundToInt(horizontal));
+        animator.SetInteger("walkDir", Mathf.RoundToInt(horizontal));
 
         if (grounded
             && Mathf.Abs(_rigidbody.velocity.x) > maxSpeed
