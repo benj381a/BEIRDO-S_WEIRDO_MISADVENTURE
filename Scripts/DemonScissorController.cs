@@ -8,9 +8,10 @@ public class DemonScissorController : MonoBehaviour
     [SerializeField] int startWait = 1;
     [SerializeField] float wait = 1;
 
-    List<Vector2> plrPositions;
+    List<Vector2> plrPositions = new List<Vector2>();
     Vector2 location;
-    Transform plr;
+    private float distance;
+    [SerializeField] Transform plr;
 
     [HideInInspector] public DemonScissorController instance;
     [HideInInspector] public bool runLogger = false, runFollow = false;
@@ -22,7 +23,7 @@ public class DemonScissorController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        plr = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
 
     // Update is called once per frame
@@ -30,14 +31,20 @@ public class DemonScissorController : MonoBehaviour
     {
         if (runFollow)
         {
-            transform.position = Vector2.MoveTowards(transform.position, location, plr.GetComponent<PlayerController>().speed * Time.deltaTime);
+            distance = Vector2.Distance(transform.position, location);
+            Vector2 direction = location - transform.position.ToVector2();
+            direction.Normalize();
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            transform.position = Vector2.MoveTowards(transform.position,location, (Vector2.Distance(transform.position,location)/wait) * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(Vector3.forward * angle);
         }
     }
     public void Start_()
     {
         runLogger = true;
         StartCoroutine(StartLogger());
-        StartCoroutine(_.SetTimeOut(startWait, () => {
+        StartCoroutine(_.SetTimeOut(startWait , () => {
             runFollow = true;
             StartCoroutine(StartFollow());
         }));
