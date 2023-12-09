@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxGrabbelDistance;
     [SerializeField] private float missedPullSpeed;
     [SerializeField] private float minDistance;
+    [SerializeField] private Transform platform;
 
     [Header("Death")]
     [SerializeField] private float waitTime;
@@ -107,6 +108,13 @@ public class PlayerController : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 
+        if (platform.parent != transform)
+        {
+            swingPoint = platform.position;
+            joint.connectedAnchor = swingPoint;
+            _renderer.SetPosition(1, swingPoint);
+        }
+
         if (Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).collider == null
             && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
             )
@@ -128,6 +136,13 @@ public class PlayerController : MonoBehaviour
             )
         {
             swingPoint = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).point;
+            Transform trans = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).transform;
+            if (trans.GetComponent<MovingPlatform>())
+            {
+                platform.position = swingPoint;
+                platform.parent = trans;
+                transform.parent = trans;
+            }
             joint.connectedAnchor = swingPoint;
             _renderer.SetPosition(1, swingPoint);
 
@@ -136,15 +151,23 @@ public class PlayerController : MonoBehaviour
 
             grabbeling = true;
         }
+        if (platform != null)
+        {
+            if (platform.parent.GetComponent<MovingPlatform>())
+            {
+                swingPoint = platform.position;
+                transform.parent = platform.parent;
+            }
+        }
         if ((Input.GetMouseButton(0) || Input.GetMouseButton(1))
             && hasPulledGrabbel
             )
         {
-            _renderer.positionCount = 2;
 
             if (Vector2.Distance(transform.position, swingPoint) > minDistance && Input.GetMouseButton(1))
             {
                 hasPulledGrabbel = false;
+                
                 StartCoroutine(PullGrabbel());
             }
         }
@@ -156,12 +179,18 @@ public class PlayerController : MonoBehaviour
             _renderer.enabled = false;
 
             grabbeling = false;
+            platform.parent = transform;
+            transform.parent = null;
+            joint.autoConfigureDistance = true;
         }
 
     }
     private IEnumerator PullGrabbel()
     {
+        joint.autoConfigureDistance = false;
+
         joint.distance = Vector2.Distance(transform.position, swingPoint) - (Time.deltaTime * ropePullSpeed);
+       
         yield return new WaitForFixedUpdate();
         hasPulledGrabbel = true;
     }
