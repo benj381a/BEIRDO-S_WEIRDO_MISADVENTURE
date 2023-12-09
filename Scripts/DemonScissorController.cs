@@ -44,7 +44,7 @@ public class DemonScissorController : MonoBehaviour
     {
         runLogger = true;
         StartCoroutine(StartLogger());
-        StartCoroutine(_.SetTimeOut(startWait * wait, () => {
+        StartCoroutine(_.SetTimeOut(startWait , () => {
             runFollow = true;
             StartCoroutine(StartFollow());
         }));
