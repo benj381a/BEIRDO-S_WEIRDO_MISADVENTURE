@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float ropePullSpeed;
     [SerializeField] private float maxGrabbelDistance;
     [SerializeField] private float missedPullSpeed;
+    [SerializeField] private float minDistance;
 
     [Header("Death")]
     [SerializeField] private float waitTime;
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
             _rigidbody.velocity *= Vector2.up;
             _rigidbody.velocity += Vector2.right * maxSpeed;
         }
-        else if (Mathf.Abs(_rigidbody.velocity.x) > (maxSpeed * .1f)
+        else if (Mathf.Abs(_rigidbody.velocity.x) > (maxSpeed * 1f)
             && grabbeling)
         {
 
@@ -85,7 +86,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _rigidbody.AddForce(Vector2.right * horizontal * (speed * .1f) * Time.deltaTime, ForceMode2D.Force);
+            _rigidbody.AddForce(Vector2.right * horizontal * (speed * 1f) * Time.deltaTime, ForceMode2D.Force);
         }
         //jump
         grounded = Physics2D.Raycast(transform.position, Vector2.down).distance <= groundDistance;
@@ -141,7 +142,7 @@ public class PlayerController : MonoBehaviour
         {
             _renderer.positionCount = 2;
 
-            if (Vector2.Distance(transform.position, swingPoint) > 2)
+            if (Vector2.Distance(transform.position, swingPoint) > minDistance && Input.GetMouseButton(1))
             {
                 hasPulledGrabbel = false;
                 StartCoroutine(PullGrabbel());

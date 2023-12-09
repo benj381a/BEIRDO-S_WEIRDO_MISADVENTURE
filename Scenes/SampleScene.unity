@@ -10439,9 +10439,10 @@ MonoBehaviour:
   maxSpeed: 1000
   jumpHeigt: 10
   groundDistance: 1.01
-  ropePullSpeed: 2
-  maxGrabbelDistance: 5
+  ropePullSpeed: 1000
+  maxGrabbelDistance: 20
   missedPullSpeed: 20
+  minDistance: 5
   waitTime: 2
   dammage: {fileID: 2090670703}
   health: 100
