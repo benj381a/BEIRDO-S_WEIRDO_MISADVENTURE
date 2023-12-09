@@ -33,7 +33,7 @@ namespace Extensions
                 }
             }
         }
-        public static IEnumerator SetTimeOut(int time, Action func)
+        public static IEnumerator SetTimeOut(float time, Action func)
         {
             yield return new WaitForSeconds(time);
             func();
