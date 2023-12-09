@@ -33,6 +33,11 @@ namespace Extensions
                 }
             }
         }
+        public static IEnumerator SetTimeOut(int time, Action func)
+        {
+            yield return new WaitForSeconds(time);
+            func();
+        }
     }
     /*public struct Serial
     {

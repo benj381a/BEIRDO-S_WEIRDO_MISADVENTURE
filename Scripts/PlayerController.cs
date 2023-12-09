@@ -7,7 +7,7 @@ using System.Linq;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Movement")]
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpHeigt;
     [SerializeField] private float groundDistance;
