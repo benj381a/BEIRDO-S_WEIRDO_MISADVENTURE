@@ -1426,8 +1426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8bba5204863c3b43ab0dfacc501ef19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startWait: 1
-  wait: 1
+  startWait: 10
+  wait: 0.1
   plr: {fileID: 1025430832}
   instance: {fileID: 0}
   runLogger: 0
