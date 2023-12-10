@@ -6,7 +6,6 @@ using UnityEditor;
 
 public class MainMenu : MonoBehaviour
 {
-
     public void PlayGame()
     {
         SmallBeardoManager.Instance.animator.SetTrigger("Restart");
