@@ -114,7 +114,7 @@ MonoBehaviour:
   jumpHeigt: 10
   groundDistance: 1.1
   ropePullSpeed: 1000
-  maxGrabbelDistance: 5
+  maxGrabbelDistance: 20
   missedPullSpeed: 20
   minDistance: 3
   platform: {fileID: 2703028559419075559}

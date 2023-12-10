@@ -86,17 +86,17 @@ public class PlayerController : MonoBehaviour
         }
         if (Mathf.Abs(_rigidbody.velocity.x-prevVelocity) > 5)
         {
-            SmallBeardoManager.Instance.animator.SetTrigger("Hurt");
+            //SmallBeardoManager.Instance.animator.SetTrigger("Hurt");
         }
         prevVelocity = _rigidbody.velocity.x;
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SmallBeardoManager.Instance.animator.SetTrigger("Restart");
+            //SmallBeardoManager.Instance.animator.SetTrigger("Restart");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         }
         if (Input.GetKeyDown(KeyCode.Insert))
         {
-            SmallBeardoManager.Instance.animator.SetTrigger("Restart");
+            //SmallBeardoManager.Instance.animator.SetTrigger("Restart");
             SceneManager.LoadSceneAsync(0);
         }
     }
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
         animator.SetInteger("walkDir", Mathf.RoundToInt(horizontal));
         animator.SetFloat("Velocity",_rigidbody.velocity.x);
-        SmallBeardoManager.Instance.animator.SetFloat("Velocity", Mathf.Abs(_rigidbody.velocity.x));
+        //SmallBeardoManager.Instance.animator.SetFloat("Velocity", Mathf.Abs(_rigidbody.velocity.x));
 
         if (grounded
             && Mathf.Abs(_rigidbody.velocity.x) > maxSpeed
@@ -275,7 +275,7 @@ public class PlayerController : MonoBehaviour
         Realease();
         GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(waitTime);
-        SmallBeardoManager.Instance.animator.SetTrigger("Restart");
+        //SmallBeardoManager.Instance.animator.SetTrigger("Restart");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
     private IEnumerator Music()
@@ -298,7 +298,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))
         {
-            SmallBeardoManager.Instance.animator.SetTrigger("Restart");
+            //SmallBeardoManager.Instance.animator.SetTrigger("Restart");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
