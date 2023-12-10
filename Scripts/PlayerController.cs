@@ -29,8 +29,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem dammage;
 
     [Header("Music")]
-    [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] public List<AudioSource> audioSources = new List<AudioSource>();
 
     [SerializeField] private AudioClip intro;
     [SerializeField] private AudioClip loop;
@@ -63,6 +62,8 @@ public class PlayerController : MonoBehaviour
         joint = GetComponent<DistanceJoint2D>();
         _renderer = GetComponent<LineRenderer>();
 
+        audioSources = GameObject.Find("Music Manager").GetComponents<AudioSource>().ToList();
+
         startPosition = transform.position;
 
         _renderer.startWidth = width;
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
             //SmallBeardoManager.Instance.animator.SetTrigger("Restart");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         }
-        if (Input.GetKeyDown(KeyCode.Insert))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             //SmallBeardoManager.Instance.animator.SetTrigger("Restart");
             SceneManager.LoadSceneAsync(0);
@@ -280,18 +281,30 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator Music()
     {
-        musicSource.clip = intro;
-        musicSource.loop = true;
-        musicSource.Play();
+        audioSources[0].clip = intro;
+        audioSources[1].clip = loop;
+        audioSources[1].loop = true;
+        audioSources[0].Play();
 
-        yield return new WaitForSeconds(intro.length * 0.9f); musicSource.clip = loop; musicSource.Play();
+        yield return new WaitForSeconds(intro.length); audioSources[1].Play();
     }
     public void PlaySfx(AudioClip sfx)
     {
-        if (!sfxSource.isPlaying || ((sfxSource.clip == walk || sfxSource.clip == run) && !(sfx == walk || sfx == run)))
+        if (sfx == walk || sfx == run)
         {
-            sfxSource.clip = sfx;
-            sfxSource.Play();
+            if (!audioSources[2].isPlaying)
+            {
+                audioSources[2].clip = sfx;
+                audioSources[2].Play();
+            }
+        }
+        else
+        {
+            if (!audioSources[3].isPlaying)
+            {
+                audioSources[3].clip = sfx;
+                audioSources[3].Play();
+            }
         }
     }
     private void OnCollisionEnter(Collision collision)

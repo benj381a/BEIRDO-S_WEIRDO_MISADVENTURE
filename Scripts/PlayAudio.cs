@@ -18,6 +18,6 @@ public class PlayAudio : MonoBehaviour
 
     public void PlayAudioFunc()
     {
-        GetComponent<AudioSource>().Play();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().audioSources[4].Play();
     }
 }
