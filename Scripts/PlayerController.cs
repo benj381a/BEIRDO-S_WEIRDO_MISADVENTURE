@@ -22,9 +22,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Death")]
     [SerializeField] private float waitTime;
-     [Tooltip("out of 100")] 
-     public int health = 100;
-    
+    [Tooltip("out of 100")]
+    public int health = 100;
+
     [Header("Particals")]
     public ParticleSystem dammage;
 
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public AudioClip grabbel;
     [SerializeField] public AudioClip buzzSawImpact;
     [SerializeField] public AudioClip pickUpImpact;
-    [SerializeField] public AudioClip scissorImpact; 
+    [SerializeField] public AudioClip scissorImpact;
 
     private bool grounded = false, hasPulledGrabbel = true, grabbeling = false, stop = false, pullingBack = false;
     private float width = .01f;
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.velocity *= Vector2.up;
             _rigidbody.velocity += Vector2.right * maxSpeed;
-            
+
         }
         else if (!grabbeling)
         {
@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
             && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
             )
         {
-            swingPoint =  Vector2.MoveTowards(transform.position, mousePos, maxGrabbelDistance);
+            swingPoint = Vector2.MoveTowards(transform.position, mousePos, maxGrabbelDistance);
 
             _renderer.SetPosition(1, swingPoint);
 
@@ -210,12 +210,12 @@ public class PlayerController : MonoBehaviour
             if (Vector2.Distance(transform.position, swingPoint) > minDistance && Input.GetMouseButton(1))
             {
                 hasPulledGrabbel = false;
-                
+
                 StartCoroutine(PullGrabbel());
             }
         }
         if ((Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
-            &&!pullingBack
+            && !pullingBack
             )
         {
             Realease();
@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
         joint.autoConfigureDistance = false;
 
         joint.distance = Vector2.Distance(transform.position, swingPoint) - (Time.deltaTime * ropePullSpeed);
-       
+
         yield return new WaitForFixedUpdate();
         hasPulledGrabbel = true;
     }
@@ -272,11 +272,22 @@ public class PlayerController : MonoBehaviour
         musicSource.loop = true;
         musicSource.Play();
 
-        yield return new WaitForSeconds(intro.length * 0.9f);musicSource.clip=loop;musicSource.Play();
+        yield return new WaitForSeconds(intro.length * 0.9f); musicSource.clip = loop; musicSource.Play();
     }
     public void PlaySfx(AudioClip sfx)
     {
-        sfxSource.clip = sfx;
-        sfxSource.Play();
+        if (!sfxSource.isPlaying || ((sfxSource.clip == walk || sfxSource.clip == run) && !(sfx == walk || sfx == run)))
+        {
+            sfxSource.clip = sfx;
+            sfxSource.Play();
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }
+

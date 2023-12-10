@@ -126,14 +126,14 @@ MonoBehaviour:
   intro: {fileID: 8300000, guid: 1cefd387d6e44be4a90a9ff80e978bb1, type: 3}
   loop: {fileID: 8300000, guid: d3e922435464ca547819182560004456, type: 3}
   walk: {fileID: 8300000, guid: ca1d2735efe694842a7dea230e9833bd, type: 3}
-  run: {fileID: 0}
-  hurt: {fileID: 0}
-  die: {fileID: 0}
+  run: {fileID: 8300000, guid: bd5b661ddfbccad469dd5d8225533fb8, type: 3}
+  hurt: {fileID: 8300000, guid: bd5b661ddfbccad469dd5d8225533fb8, type: 3}
+  die: {fileID: 8300000, guid: bd5b661ddfbccad469dd5d8225533fb8, type: 3}
   jump: {fileID: 8300000, guid: d2617cb77cea5cb4b8282e6835e106df, type: 3}
-  grabbel: {fileID: 0}
-  buzzSawImpact: {fileID: 0}
-  pickUpImpact: {fileID: 0}
-  scissorImpact: {fileID: 0}
+  grabbel: {fileID: 8300000, guid: bd5b661ddfbccad469dd5d8225533fb8, type: 3}
+  buzzSawImpact: {fileID: 8300000, guid: bd5b661ddfbccad469dd5d8225533fb8, type: 3}
+  pickUpImpact: {fileID: 8300000, guid: bd5b661ddfbccad469dd5d8225533fb8, type: 3}
+  scissorImpact: {fileID: 8300000, guid: bd5b661ddfbccad469dd5d8225533fb8, type: 3}
   swingPoint: {x: 0, y: 0}
   animator: {fileID: 0}
 --- !u!70 &1191931921421953050
