@@ -29,9 +29,21 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem dammage;
 
     [Header("Music")]
-    [SerializeField] private AudioSource musicSorce;
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource sfxSource;
+
     [SerializeField] private AudioClip intro;
     [SerializeField] private AudioClip loop;
+
+    [SerializeField] public AudioClip walk;
+    [SerializeField] public AudioClip run;
+    [SerializeField] public AudioClip hurt;
+    [SerializeField] public AudioClip die;
+    [SerializeField] public AudioClip jump;
+    [SerializeField] public AudioClip grabbel;
+    [SerializeField] public AudioClip buzzSawImpact;
+    [SerializeField] public AudioClip pickUpImpact;
+    [SerializeField] public AudioClip scissorImpact; 
 
     private bool grounded = false, hasPulledGrabbel = true, grabbeling = false, stop = false, pullingBack = false;
     private float width = .01f;
@@ -92,15 +104,19 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.velocity *= Vector2.up;
             _rigidbody.velocity += Vector2.right * maxSpeed;
-        }
-        else if (Mathf.Abs(_rigidbody.velocity.x) > (maxSpeed * 1f)
-            && grabbeling)
-        {
-
+            
         }
         else if (!grabbeling)
         {
             _rigidbody.AddForce(Vector2.right * horizontal * speed * Time.deltaTime, ForceMode2D.Force);
+            if (_rigidbody.velocity.x > 18)
+            {
+                PlaySfx(run);
+            }
+            else
+            {
+                PlaySfx(walk);
+            }
         }
         else
         {
@@ -116,6 +132,8 @@ public class PlayerController : MonoBehaviour
             if (_rigidbody.velocity.y == 0)
             {
                 _rigidbody.AddForce(Vector2.up * jumpHeigt, ForceMode2D.Impulse);
+                animator.SetTrigger("Jump");
+                PlaySfx(jump);
             }
         }
     }
@@ -142,6 +160,7 @@ public class PlayerController : MonoBehaviour
 
             _renderer.enabled = true;
 
+
             StartCoroutine(PullGrabbelIn());
         }
 
@@ -154,6 +173,8 @@ public class PlayerController : MonoBehaviour
         {
             swingPoint = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).point;
             Transform trans = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).transform;
+
+            PlaySfx(grabbel);
 
             if (trans.GetComponentInChildren<MovingPlatform>())
             {
@@ -247,10 +268,15 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator Music()
     {
-        musicSorce.clip = intro;
-        musicSorce.loop = true;
-        musicSorce.Play();
+        musicSource.clip = intro;
+        musicSource.loop = true;
+        musicSource.Play();
 
-        yield return new WaitForSeconds(intro.length * 0.9f);musicSorce.clip=loop;musicSorce.Play();
+        yield return new WaitForSeconds(intro.length * 0.9f);musicSource.clip=loop;musicSource.Play();
+    }
+    public void PlaySfx(AudioClip sfx)
+    {
+        sfxSource.clip = sfx;
+        sfxSource.Play();
     }
 }

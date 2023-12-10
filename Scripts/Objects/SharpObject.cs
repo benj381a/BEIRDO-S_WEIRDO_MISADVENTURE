@@ -7,11 +7,14 @@ public class SharpObject : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private float force;
 
+    private PlayerController plrController;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerController>().health -= damage;
+            plrController = collision.GetComponent<PlayerController>();
+            plrController.health -= damage;
 
             Vector2 colTrans_Trans = collision.transform.position - transform.position;
 
@@ -19,7 +22,19 @@ public class SharpObject : MonoBehaviour
             
             if (damage > 0)
             {
-                collision.GetComponent<PlayerController>().dammage.Play();
+                if (plrController.health > 0 && !collision.GetComponent<Spin>())
+                {
+                    plrController.PlaySfx(plrController.hurt);
+                }
+                else if (plrController.health > 0 && collision.GetComponent<Spin>())
+                {
+                    plrController.PlaySfx(plrController.buzzSawImpact);
+                }
+                else
+                {
+                    plrController.PlaySfx(plrController.die);
+                }
+                plrController.dammage.Play();
                 StartCoroutine(HurtAnim(collision));
 
             }
@@ -29,17 +44,18 @@ public class SharpObject : MonoBehaviour
                 if (damage < 0)
                 {
                     collision.GetComponent<ParticleController>().pickupParticle.Play();
+                    plrController.PlaySfx(plrController.pickUpImpact);
                 }
             }
 
             if (damage < 0)
             {
-                RaycastHit2D hit = Physics2D.BoxCast(collision.GetComponent<PlayerController>().swingPoint, Vector2.one, 0, Vector2.zero);
+                RaycastHit2D hit = Physics2D.BoxCast(plrController.swingPoint, Vector2.one, 0, Vector2.zero);
                 if (hit.collider != null)
                 {
                     if (hit.collider.gameObject == gameObject)
                     {
-                        collision.GetComponent<PlayerController>().Realease();
+                        plrController.Realease();
                     }
                 }
                 
@@ -49,6 +65,7 @@ public class SharpObject : MonoBehaviour
 
             if (GetComponent<DemonScissorController>())
             {
+                plrController.PlaySfx(plrController.scissorImpact);
                 GetComponent<DemonScissorController>().Stop_();
                 GetComponent<DemonScissorController>().Start_();
             }
@@ -58,6 +75,6 @@ public class SharpObject : MonoBehaviour
     IEnumerator HurtAnim(Collider2D collision)
     {
         yield return new WaitForSeconds(1f);
-        collision.GetComponent<PlayerController>().animator.SetTrigger("Hurt");
+        plrController.animator.SetTrigger("Hurt");
     }
 }
