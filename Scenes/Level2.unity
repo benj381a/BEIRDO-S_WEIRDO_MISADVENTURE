@@ -32696,6 +32696,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelPortal
       objectReference: {fileID: 0}
+    - target: {fileID: 5898067842474852327, guid: 5df7bd464f7e42a44af5c3116c63cebe, type: 3}
+      propertyPath: levelID
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
