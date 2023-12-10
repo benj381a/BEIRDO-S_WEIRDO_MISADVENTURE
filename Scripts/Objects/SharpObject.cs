@@ -34,6 +34,7 @@ public class SharpObject : MonoBehaviour
                 {
                     plrController.PlaySfx(plrController.die);
                 }
+                SmallBeardoManager.Instance.animator.SetTrigger("Hurt");
                 plrController.dammage.Play();
                 StartCoroutine(HurtAnim(collision));
 

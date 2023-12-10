@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public AudioClip scissorImpact;
 
     private bool grounded = false, hasPulledGrabbel = true, grabbeling = false, stop = false, pullingBack = false;
-    private float width = .01f;
+    private float width = .01f, prevVelocity = 0;
     [HideInInspector] public Vector2 swingPoint;
     private Vector2 startPosition;
 
@@ -84,6 +84,11 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Dead());
             }
         }
+        if (Mathf.Abs(_rigidbody.velocity.x-prevVelocity) > 5)
+        {
+            SmallBeardoManager.Instance.animator.SetTrigger("Hurt");
+        }
+        prevVelocity = _rigidbody.velocity.x;
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
@@ -96,6 +101,8 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
 
         animator.SetInteger("walkDir", Mathf.RoundToInt(horizontal));
+        animator.SetFloat("Velocity",_rigidbody.velocity.x);
+        SmallBeardoManager.Instance.animator.SetFloat("Velocity", Mathf.Abs(_rigidbody.velocity.x));
 
         if (grounded
             && Mathf.Abs(_rigidbody.velocity.x) > maxSpeed
