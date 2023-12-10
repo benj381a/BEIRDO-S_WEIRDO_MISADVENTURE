@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 4086561381498123916}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.12374, y: -0.12374, z: 0}
-  m_LocalScale: {x: 1.1237, y: 1.1237, z: 1.1237}
+  m_LocalPosition: {x: 0.112, y: -0.139, z: 0}
+  m_LocalScale: {x: 0.85, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5876373587437594887}
@@ -102,7 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5876373587437594887}
   m_Layer: 0
-  m_Name: 2x2
+  m_Name: 2x2 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,6 +263,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d47d4c9671dceb243928477a33d19b45, type: 2}
+    - target: {fileID: -1271174957023001544, guid: b7884b138752f9a4b84ccd60848888c2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -664073320361066871, guid: b7884b138752f9a4b84ccd60848888c2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -277,7 +281,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d47d4c9671dceb243928477a33d19b45, type: 2}
     - target: {fileID: 7509942827432944709, guid: b7884b138752f9a4b84ccd60848888c2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964797663011197484, guid: b7884b138752f9a4b84ccd60848888c2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
