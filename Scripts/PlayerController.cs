@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
             swingPoint = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).point;
             Transform trans = Physics2D.Raycast(transform.position, (mousePos - transform.position.ToVector2()).normalized.normalized, maxGrabbelDistance).transform;
 
-            PlaySfx(grabbel);
+            //PlaySfx(grabbel);
 
             if (trans.GetComponentInChildren<MovingPlatform>())
             {
