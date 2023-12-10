@@ -313,7 +313,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: e30c3a1de67a98a4da6e301a861f9467, type: 3}
+  m_Texture: {fileID: 2800000, guid: ec1168d49c76ec442b53f6344c5fc23b, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -849,6 +849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308c2944902af5b44a7ff1226b1a7d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clip: {fileID: 0}
 --- !u!1 &1899299261
 GameObject:
   m_ObjectHideFlags: 0
