@@ -9,6 +9,7 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        SmallBeardoManager.Instance.animator.SetTrigger("Restart");
         SceneManager.LoadSceneAsync(levelID);
     }
 }

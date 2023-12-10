@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        SmallBeardoManager.Instance.animator.SetTrigger("Restart");
         SceneManager.LoadSceneAsync(1);
     }
     public void QuitGame()

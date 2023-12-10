@@ -15,7 +15,13 @@ public class DontDestroyOnLoad : MonoBehaviour
         {
             Instance = this;
         }
-
-        DontDestroyOnLoad(this);
+        if (!(GameObject.Find("Eternal").scene.buildIndex == -1))
+        {
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

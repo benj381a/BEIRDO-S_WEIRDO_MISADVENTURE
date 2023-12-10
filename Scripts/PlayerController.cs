@@ -91,7 +91,13 @@ public class PlayerController : MonoBehaviour
         prevVelocity = _rigidbody.velocity.x;
         if (Input.GetKeyDown(KeyCode.R))
         {
+            SmallBeardoManager.Instance.animator.SetTrigger("Restart");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        }
+        if (Input.GetKeyDown(KeyCode.Insert))
+        {
+            SmallBeardoManager.Instance.animator.SetTrigger("Restart");
+            SceneManager.LoadSceneAsync(0);
         }
     }
     private void Movement()
@@ -269,9 +275,8 @@ public class PlayerController : MonoBehaviour
         Realease();
         GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(waitTime);
-        stop = false;
-        health = 100;
-        transform.position = startPosition;
+        SmallBeardoManager.Instance.animator.SetTrigger("Restart");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
     private IEnumerator Music()
     {
@@ -293,6 +298,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))
         {
+            SmallBeardoManager.Instance.animator.SetTrigger("Restart");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
